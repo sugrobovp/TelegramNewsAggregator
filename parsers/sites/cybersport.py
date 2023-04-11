@@ -1,47 +1,10 @@
+from parsers.parser import IParser
 from datetime import datetime
-from selenium import webdriver
-from bs4 import BeautifulSoup
-from abc import ABC, abstractmethod
-from typing import Type
-
-
-# class Browser:
-#
-#     def __init__(self, url):
-#         self.url = url
-#         self.driver = webdriver.Chrome()
-#         self.html = None
-#
-#     def start(self):
-#         self.driver.get(self.url)
-#         self.html = self.driver.page_source
-#
-#     def stop(self):
-#         self.driver.quit()
-
-
-class ParserInterface(ABC):
-
-    @abstractmethod
-    def parse(self, url):
-        pass
-
-
-class BeautifulSoupHTMLParser(ParserInterface):
-
-    @classmethod
-    def parse(cls, url):
-        driver = webdriver.Chrome()
-        driver.get(url)
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
-        driver.quit()
-        return soup
 
 
 class CybersportParser:
 
-    def __init__(self, parser: Type[BeautifulSoupHTMLParser]):
+    def __init__(self, parser: IParser):
         self.parser = parser
 
     def parse(self, url):
