@@ -7,8 +7,8 @@ class CybersportParser:
     def __init__(self, parser: IParser):
         self.parser = parser
 
-    def parse(self, url):
-        soup = self.parser.parse(url=url)
+    def parse(self):
+        soup = self.parser.parse()
         data = self.extract_data(soup)
         return data
 
@@ -35,18 +35,25 @@ class CybersportParser:
             date_str = block.find('time')['datetime'].strip()
             pub_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S%z')
 
+            try:
+                img = block.find('img')['src']
+            except TypeError:
+                img = 'Нету изображения'
+
             # Выводим извлеченную информацию
             results.append({
                 'title': title,
                 'link': link,
                 'category': category,
-                'date': pub_date
+                'date': pub_date,
+                'img': img
             })
 
             print('Title:', title)
             print('Link:', link)
             print('Category:', category)
             print('Publication Date:', pub_date)
+            print('img:', img)
             print()
 
         return results

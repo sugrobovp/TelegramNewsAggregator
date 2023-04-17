@@ -9,7 +9,7 @@ class BeautifulSoupHTMLParser(IParser):
         self.browser = browser
         self.browser_type = browser_type
 
-    def parse(self, url):
+    def parse(self):
         self.browser.start(self.browser_type)
         html = self.browser.driver.page_source
         soup = BeautifulSoup(html, 'lxml')
